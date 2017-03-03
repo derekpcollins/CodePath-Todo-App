@@ -51,6 +51,18 @@ private void readItems() {
 }
 ```
 
+To have the cursor show up at the end of the string in the EditText field in EditItemActivity, use `append()` instead of `setText()`. [Source](http://stackoverflow.com/questions/14673716/android-how-to-set-the-edittext-cursor-to-the-end-of-its-text)
+
+To show the keyboard automatically when EditItemActivity appears, use the following:
+
+```java
+if(etUpdateText.requestFocus()) {
+  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+}
+```
+
+[Source](http://stackoverflow.com/questions/14327412/set-focus-on-edittext)
+
 ## License
 
     Copyright 2017 Derek P. Collins
