@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     ListView lvItems;
     EditText etEditText;
 
+    private final int REQUEST_CODE = 200;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, EditItemActivity.class);
                 i.putExtra("text", toDoItems.get(position).toString());
                 i.putExtra("position", position);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_CODE);
             }
         });
     }
@@ -82,5 +84,17 @@ public class MainActivity extends AppCompatActivity {
         aToDoAdapter.add(etEditText.getText().toString());
         etEditText.setText("");
         writeItems();
+    }
+
+    // Handle the result coming from EditItemActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            String text = data.getExtras().getString("text");
+            int position = data.getExtras().getInt("position", 0);
+            toDoItems.set(position, text);
+            aToDoAdapter.notifyDataSetChanged();
+            writeItems();
+        }
     }
 }
